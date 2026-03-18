@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Web3 Demo</title>
+</head>
+<body>
+
+<h2>Web3 Wallet Connection</h2>
+<button onclick="connectWallet()">Connect Wallet</button>
+
+<p id="account"></p>
+
+<script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.min.js"></script>
+
+<script>
+async function connectWallet() {
+    if (window.ethereum) {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        await provider.send("eth_requestAccounts", []);
+        const signer = provider.getSigner();
+        const address = await signer.getAddress();
+
+        document.getElementById("account").innerText =
+            "Connected: " + address;
+    } else {
+        alert("MetaMask not installed");
+    }
+}
+</script>
+
+</body>
+</html>
